@@ -6,14 +6,14 @@ import firebase from "../database/firebase";
 import Moment from 'moment';
 import 'moment/locale/es';
 
-const ListadePagosScreen = (props) => {
+const CobrosDelDia = (props) => {
   const [pagos, setPagos] = useState([]);
   const [loading, setLoading] = useState(true);
   Moment.locale('es');
   const [date, setDate] = useState(Moment(new Date()).format('dddd DD/MM/yyyy'))
 
   useEffect(() => {
-    firebase.db.collection("pagos").where("idPrestamo", "==", props.route.params.prestamoId).orderBy("cuota","asc").onSnapshot((querySnapshot) => {
+    firebase.db.collection("pagos").where("fechapagar", "==", date.toString()).orderBy("paga","asc").onSnapshot((querySnapshot) => {
       const pagos = [];
       querySnapshot.docs.forEach((doc) => {
         const { nombre, valor, paga, fechapagar, cuota, cobrador, fechacobro } = doc.data();
@@ -32,6 +32,7 @@ const ListadePagosScreen = (props) => {
       setLoading(false);
     });
   }, []);
+
   const pagarCuota =  async (cuota) => {
 
     const cuotaRef= firebase.db.collection("pagos").doc(cuota);
@@ -70,6 +71,7 @@ const confirmaCuota = async (cuotaVal, cuotaRef, prestamo) => {
       cobrador: "Bruno",
       fechacobro: date.toString()
     }).then(pagarPrestamo(cuotaVal, prestamo)) 
+
 
 
     setLoading(false);
@@ -116,6 +118,7 @@ const confirmaCuota = async (cuotaVal, cuotaRef, prestamo) => {
             key={pago.id}
             bottomDivider
             onPress= {()=> pagarCuota(pago.id)}
+            
           >
           <ListItem.Chevron />
          {(() => {
@@ -141,7 +144,6 @@ const confirmaCuota = async (cuotaVal, cuotaRef, prestamo) => {
         }
       })()}
             <ListItem.Content>
-
 
               <ListItem.Title>Cliente: {pago.nombre} - Cuota: {pago.cuota}</ListItem.Title>
               <ListItem.Subtitle>Valor de la Cuota: ${pago.valor}</ListItem.Subtitle>
@@ -189,4 +191,4 @@ const styles = StyleSheet.create({
 
   });
 
-export default ListadePagosScreen;
+export default CobrosDelDia;

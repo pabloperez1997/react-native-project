@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Button, StyleSheet, View } from "react-native";
-import { ListItem, Avatar } from "react-native-elements";
+import { ListItem, Avatar, SearchBar } from 'react-native-elements';
 import { ScrollView } from "react-native-gesture-handler";
 import { FAB } from 'react-native-paper';
 import firebase from "../database/firebase";
 
 const UserScreen = (props) => {
-  const [users, setUsers] = useState([]);
+const [users, setUsers] = useState([]);
+const [arrayholder, setFilter] = useState([]);
+
+const [estado, setEstado] = useState("");
+
+
+
+const handleChangeText = (value) => {
+  setEstado(value);
+  searchFilterFunction(value);
+};
 
   useEffect(() => {
     firebase.db.collection("users").onSnapshot((querySnapshot) => {
@@ -21,14 +31,38 @@ const UserScreen = (props) => {
         });
       });
       setUsers(users);
+      setFilter(users);
     });
   }, []);
 
+  searchFilterFunction = (text) => {
+
+  console.log(arrayholder)
+    const newData = users.filter(item => {
+      const itemData = item.nombre.toUpperCase();
+      const textData = text.toUpperCase();
+
+      return itemData.indexOf(textData) > -1;
+    });
+
+    setFilter(newData);
+  };
+
+
   return (
-    <View style={{flex:1, backgroundColor: '#f3f3f3'}}>     
+    <View style={{flex:1, backgroundColor: '#fff'}}>   
+      <SearchBar
+       containerStyle={{backgroundColor: 'white'}}
+        placeholder="Buscar Cliente..."
+        lightTheme
+        round
+        onChangeText={(value) => handleChangeText(value, "estado")}
+        autoCorrect={false}
+        value={estado}
+      />
     <ScrollView>
 
-      {users.map((user) => {
+      {arrayholder.map((user) => {
         return (
           <ListItem
             key={user.id}

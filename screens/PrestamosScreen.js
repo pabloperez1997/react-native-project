@@ -116,8 +116,23 @@ const PrestamosScreen = (props) => {
 
           try {
             //Generar Pagos
+
+            let fech = new Date();
+            
+
            for(let i = 1; i <= state.cuotas; i++){
-              
+
+
+            //console.log(today.getDay());
+            fech.setDate(fech.getDate() + 1);
+           // fecha_cuota = Moment(fech.format('dddd DD/MM/yyyy')
+
+            if(fech.getDay().toString() === "0"){
+              fech.setDate(fech.getDate() + 1);
+            }
+
+
+
             firebase.db.collection("pagos").add({
                 idCliente: state.id,
                 idPrestamo: snap.id,
@@ -126,7 +141,7 @@ const PrestamosScreen = (props) => {
                 valor: parseInt(totalprestamo/parseInt(state.cuotas)),
                 paga: 'NO',
                 cobrador: '',
-                fechapagar: date.toString(),
+                fechapagar: Moment(fech).format('dddd DD/MM/yyyy').toString(),
                 fechacobro: ''
               })
             }
@@ -147,6 +162,7 @@ const PrestamosScreen = (props) => {
     }
     setLoading(false)
     Alert.alert("Prestamo Guardado.", "El nuevo préstamo se Guardó con Éxito.") 
+    setState({});
     props.navigation.goBack(null);
   };
 

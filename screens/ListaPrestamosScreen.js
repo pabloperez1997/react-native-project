@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Button, StyleSheet, View, Alert } from "react-native";
+import { Button, StyleSheet, View, Alert, ActivityIndicator } from "react-native";
 import { ListItem, Avatar } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import { FAB } from 'react-native-paper';
 import firebase from "../database/firebase";
 
 
+
 const ListaPrestamosScreen = (props) => {
   const [prestamos, setPres] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
  
   useEffect(() => {
@@ -30,6 +31,7 @@ const ListaPrestamosScreen = (props) => {
         });
       });
       setPres(prestamos);
+      setLoading(false);
     });
   }, []);
 
@@ -59,12 +61,13 @@ const ListaPrestamosScreen = (props) => {
             <Avatar
               source={{
                 uri:
-                  "https://cdn.shopify.com/s/files/1/0573/7352/4157/products/BankCreditCardIcon_b2ee36fa-8565-4f76-abe7-cabca8a9f3e2_large.jpg",
+                  "https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/128/external-money-banking-and-finance-kiranshastry-lineal-color-kiranshastry-4.png",
               }}
-              rounded
+              
             />
             <ListItem.Content>
-              <ListItem.Title>{prestamo.nombre}</ListItem.Title>
+              <ListItem.Title>Préstamo de: ${prestamo.monto} - {prestamo.nombre}</ListItem.Title>
+              <ListItem.Subtitle>Cliente: {prestamo.nombre}</ListItem.Subtitle>
               <ListItem.Subtitle>Fecha: {prestamo.fecha}</ListItem.Subtitle>
               <ListItem.Subtitle>Total Préstamo: ${prestamo.monto}</ListItem.Subtitle>
               <ListItem.Subtitle>Valor Cuota: ${prestamo.valorcuota}</ListItem.Subtitle>

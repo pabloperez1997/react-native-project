@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
-    "@react-native-firebase/app": "^12.9.0",
+    "@react-native-firebase/app": "^12.9.1",
+    "@react-native-firebase/auth": "^12.9.1",
     "@react-navigation/drawer": "^6.1.6",
     "@react-navigation/native": "^6.0.4",
     "@react-navigation/native-stack": "^6.2.2",
