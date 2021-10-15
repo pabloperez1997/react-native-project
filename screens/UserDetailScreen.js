@@ -5,7 +5,8 @@ import {
   Alert,
   ActivityIndicator,
   StyleSheet,
-  LogBox
+  LogBox,
+  Image
 } from "react-native";
 import { ListItem } from 'react-native-elements';
 
@@ -99,6 +100,11 @@ const UserDetailScreen = (props) => {
 
    
     <ScrollView style={styles.container}>
+      {/*Top Large Image */}
+        <Image
+        source={{ uri:  "https://icons.iconarchive.com/icons/papirus-team/papirus-status/256/avatar-default-icon.png" }}
+        style={styles.sideMenuProfileIcon}
+      />
        {/* Nombre y Apellido Input */}
       <View style={styles.searchSection}>
       <Icon style={styles.searchIcon} name="user" size={30} color="#000"/>
@@ -162,7 +168,13 @@ const UserDetailScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
-  
+  sideMenuProfileIcon: {
+    resizeMode: 'center',
+    width: 100,
+    height: 100,
+    borderRadius: 100 / 2,
+    alignSelf: 'center',
+  },
   container: {
     flex: 1,
     padding: 10,

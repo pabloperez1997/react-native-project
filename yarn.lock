@@ -1929,6 +1929,11 @@
     "sudo-prompt" "^9.0.0"
     "wcwidth" "^1.0.1"
 
+"@react-native-community/netinfo@^6.0.2":
+  "integrity" "sha512-HbVIv6p+VAzSqALkfKKNbtSy0TneL7EILIqxiOjt/5weVdTuZ88NRyPNQAZBh6W8QYirXJo3f00ryMk9iLs7gQ=="
+  "resolved" "https://registry.npmjs.org/@react-native-community/netinfo/-/netinfo-6.0.2.tgz"
+  "version" "6.0.2"
+
 "@react-native-firebase/app@^12.9.1", "@react-native-firebase/app@12.9.1":
   "integrity" "sha512-AXjEsjx6nJ+3UC5J5mg9uYzzRT0cuHjXvQ1t3aK72C2v/EBKADus8vhhiE33CB8wpFTe7cQmw6ygfK1KblNBaw=="
   "resolved" "https://registry.npmjs.org/@react-native-firebase/app/-/app-12.9.1.tgz"
@@ -6782,7 +6787,7 @@
     "prop-types" "^15.6.0"
     "react-timer-mixin" "^0.13.4"
 
-"react-native@*", "react-native@>=0.11", "react-native@>=0.42.0", "react-native@>=0.62.0-rc.0 <0.64.0", "react-native@~0.63.4":
+"react-native@*", "react-native@>=0.11", "react-native@>=0.42.0", "react-native@>=0.59", "react-native@>=0.62.0-rc.0 <0.64.0", "react-native@~0.63.4":
   "integrity" "sha512-I4kM8kYO2mWEYUFITMcpRulcy4/jd+j9T6PbIzR0FuMcz/xwd+JwHoLPa1HmCesvR1RDOw9o4D+OFLwuXXfmGw=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.63.4.tgz"
   "version" "0.63.4"

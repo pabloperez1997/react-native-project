@@ -46,19 +46,26 @@ const PrestamosScreen = (props) => {
     if (prop === "interes" && ( (state.monto) !== null )) {
       calculateTotal(state.monto,value,state.cuotas);    
       }
+    if (prop === "cuotas" && ( (state.monto) !== null && (state.interes) !== null)) {
+      calculateTotal(state.monto, state.interes, value);    
+      }
 
       };
 
   
   const calculateTotal = (monto, interes, cuotas)=>{
     const total= parseInt(parseInt(monto)+(parseInt(monto)*(parseInt(interes)/100)));
-    const gan= parseInt(total)-parseInt(monto);
-    const cuota= parseInt(total)/parseInt(cuotas);
-
+    const gan= parseInt(parseInt(total)-parseInt(monto));
+    const cuota= parseInt(parseInt(total)/parseInt(cuotas));
 
     if (isNaN(total)) {
       setTotalPrestamo("0");
       setGanacia("0");
+      return;
+    }
+
+    if (isNaN(cuota)) {
+      setValorCuota(total)
       return;
     }
     setTotalPrestamo(total.toString())
@@ -68,11 +75,6 @@ const PrestamosScreen = (props) => {
 
 
   const nuevoPrestamo = async () => {
-
-    //console.log(parseInt(state.monto))
-    //console.log(parseInt(state.cuotas))
-    //console.log(parseInt(state.interes))
-    
 
     let cou = /^\d+$/.test(state.cuotas);
     let mon = /^\d+$/.test(state.monto);
@@ -119,19 +121,15 @@ const PrestamosScreen = (props) => {
 
             let fech = new Date();
             
-
-           for(let i = 1; i <= state.cuotas; i++){
-
+            for(let i = 1; i <= state.cuotas; i++){
 
             //console.log(today.getDay());
             fech.setDate(fech.getDate() + 1);
-           // fecha_cuota = Moment(fech.format('dddd DD/MM/yyyy')
+            // fecha_cuota = Moment(fech.format('dddd DD/MM/yyyy')
 
             if(fech.getDay().toString() === "0"){
               fech.setDate(fech.getDate() + 1);
             }
-
-
 
             firebase.db.collection("pagos").add({
                 idCliente: state.id,

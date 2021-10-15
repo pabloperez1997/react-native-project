@@ -5,7 +5,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { FAB } from 'react-native-paper';
 import firebase from "../database/firebase";
 
-const UserScreen = (props) => {
+const UsersList = (props) => {
 const [users, setUsers] = useState([]);
 const [arrayholder, setFilter] = useState([]);
 
@@ -77,7 +77,7 @@ const handleChangeText = (value) => {
             <Avatar
               source={{
                 uri:
-                  "https://cdn-icons-png.flaticon.com/512/147/147144.png",
+                  "https://icons.iconarchive.com/icons/papirus-team/papirus-status/256/avatar-default-icon.png",
               }}
               rounded
             />
@@ -112,4 +112,4 @@ const styles = StyleSheet.create({
     },
   });
 
-export default UserScreen;
+export default UsersList;

@@ -1,57 +1,72 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView,ActivityIndicator, Input,Alert,Image} from "react-native";
+import { View, StyleSheet, ActivityIndicator,ScrollView, Input,Alert,Image} from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome'; 
-import firebase from "../database/firebase";
 import Button from 'apsl-react-native-button'
 import { TextInput } from "react-native-paper";
+import auth from '@react-native-firebase/auth';
+import firebase from "firebase";
+import "firebase/firestore";
 
 
-const CreateUserScreen = (props) => {
+const CrearEmpleado = (props) => {
     const initalState = {
       nombre: "",
-      celular: "",
-      direccion: "",
+      correo: "",
+      contraseña: "",
     };
   
 const [state, setState] = useState(initalState);
 const [loading, setLoading] = useState(false);
-
 const handleChangeText = (value, nombre) => {
       setState({ ...state, [nombre]: value });
     };
   
 const saveNewUser = async () => {
-  setLoading(true);   
-  let int = /^\d+$/.test(state.celular);
+  setLoading(true);    
 
-      if (state.nombre === "") {
-        setLoading(false);
-        Alert.alert("Error","Por favor, ingrese un Nombre.");
-           
-        return;
+  var config = {
+    apiKey: "AIzaSyCZjmOJyA-OAAtzO1q1nJmwwgCFowUwRP8",
+    authDomain: "proyecto-f6d11.firebaseapp.com",
+    projectId: "proyecto-f6d11",
+    storageBucket: "proyecto-f6d11.appspot.com",
+    messagingSenderId: "164363464516",
+    appId: "1:164363464516:web:57cb7d51dedc3a02757111"
+  };
+  
+  let secundaria = firebase.initializeApp(config, "secundaria");
+  
+
+    await secundaria.auth().createUserWithEmailAndPassword(state.correo, state.contraseña).
+    then((userCredentials)=>{
+        if(userCredentials.user)
+          userCredentials.user.updateProfile({displayName: state.nombre})}).
+    then( ()=> {
+        Alert.alert("Empleado Guardado", "El Empleado fue Guardado con éxito.");
+        secundaria.auth().signOut() 
+        secundaria.delete()
+        props.navigation.goBack(null);
+        
+      }).
+    catch (error =>  {
+      switch(error.code) {
+        case 'auth/weak-password':
+              Alert.alert('Error','La Contraseña debe ser de 6 caracteres o más!')
+              break;
+        case 'auth/email-already-in-use':
+              Alert.alert('Error','Ya existe ese email!')
+              break;
+        case 'auth/invalid-email':
+              Alert.alert('Error','Formato de Email Incorrecto!')
+              break;
       }
-
-      if(!int){                 
-        setLoading(false);  
-        Alert.alert("Error","Por favor, compruebe el celular.");
-           
-        return;
-      }  
-      
-        try {
-          await firebase.db.collection("users").add({
-            nombre: state.nombre,
-            celular: state.celular,
-            direccion: state.direccion,
-          });
-          Alert.alert("Cliente Guardado", "El Cliente fue Guardado con éxito.");
-          props.navigation.goBack(null);
-        } catch (error) {
-          console.log(error)
-          setLoading(false);  
-        }
-        setLoading(false);  
-    };
+      console.log(error.code)
+      secundaria.auth().signOut() 
+      secundaria.delete()
+      setLoading(false);
+    });
+  };
+    
+ 
 
     if (loading) {
       return (
@@ -60,7 +75,7 @@ const saveNewUser = async () => {
         </View>
       );
     }
-
+    
     return (
         <ScrollView style={styles.container}>
         {/*Top Large Image */}
@@ -79,35 +94,35 @@ const saveNewUser = async () => {
                 value={state.nombre}  
             />
           </View>  
-          {/* Celular Input */}
+          {/* Email Input */}
           <View style={styles.searchSection}>
-            <Icon style={styles.searchIcon} name="phone" size={30} color="#000"/>
+            <Icon style={styles.searchIcon} name="envelope" size={25} color="#000"/>
             <TextInput
-                label="Celular"
+                label="Email"
                 style={styles.input}
-                placeholder="Celular"
+                placeholder="Email"
                 //numberOfLines={4}
-                onChangeText={(value) => handleChangeText(value, "celular")}
-                value={state.celular}
-                keyboardType="numeric" 
+                onChangeText={(value) => handleChangeText(value, "correo")}
+                value={state.correo}
+               
             />
           </View>
-          {/* Dirección Input */}
+          {/* Contraseña Input */}
           <View style={styles.searchSection}>
-            <Icon style={styles.searchIcon} name="map-marker" size={30} color="#000"/>
+            <Icon style={styles.searchIcon} name="lock" size={30} color="#000"/>
             <TextInput 
-                label="Dirección"
+                label="Contraseña"
                 style={styles.input}
-                placeholder="Dirección"
+                placeholder="Contraseña"
                 //numberOfLines={4}
-                onChangeText={(value) => handleChangeText(value, "direccion")}
-                value={state.direccion}  
+                onChangeText={(value) => handleChangeText(value, "contraseña")}
+                value={state.contraseña}  
             />
           </View> 
 
           <Button style={styles.buttonGREEN} textStyle={{fontSize: 18,  fontWeight: 'bold', color: 'white',letterSpacing: 0.25,}}
           onPress={() => saveNewUser()} 
-          > Guardar Cliente</Button>
+          > Guardar Empleado</Button>
 
         </ScrollView>
       );
@@ -178,4 +193,4 @@ searchIcon: {
 });
 
 
-export default CreateUserScreen;
+export default CrearEmpleado;

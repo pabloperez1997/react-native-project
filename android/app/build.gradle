@@ -185,6 +185,7 @@ android {
 
 dependencies {
     implementation project(path: ":@react-native-firebase_auth")
+    implementation project(path: ":@react-native-firebase_app")
     implementation platform('com.google.firebase:firebase-bom:28.4.2')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
