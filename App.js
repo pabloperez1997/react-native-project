@@ -242,10 +242,10 @@ const ListaClientesAndDetalles = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="UsersList" component={UsersList} headerShown={false} options={{headerMode: 'none', headerShown: false}}/>
-      <Stack.Screen name="UserDetailScreen" component={UserDetailScreen}  options={{headerTitle: 'Atrás'}} /> 
-      <Stack.Screen name="ListaPrestamosScreen" component={ListaPrestamosScreen} options={{headerTitle: 'Atrás'}}/>
-      <Stack.Screen name="ListadePagosScreen" component={ListadePagosScreen} options={{headerTitle: 'Atrás'}}/> 
-      <Stack.Screen name="PrestamosScreen" component={PrestamosScreen} options={{headerTitle: 'Atrás'}}/> 
+      <Stack.Screen name="UserDetailScreen" component={UserDetailScreen}  options={{headerTitle: 'Detalles del Cliente'}} /> 
+      <Stack.Screen name="ListaPrestamosScreen" component={ListaPrestamosScreen} options={{headerTitle: 'Lista de Préstamos'}}/>
+      <Stack.Screen name="ListadePagosScreen" component={ListadePagosScreen} options={{headerTitle: 'Lista de Cuotas'}}/> 
+      <Stack.Screen name="PrestamosScreen" component={PrestamosScreen} options={{headerTitle: 'Nuevo Préstamo'}}/> 
       
     </Stack.Navigator>
   );
@@ -432,7 +432,7 @@ const styles = StyleSheet.create({
   subView: {
     backgroundColor: 'white',
     height: 430,
-    marginTop: 200,
+    marginTop: 100,
     borderRadius: 20,
     
   },
